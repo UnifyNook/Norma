@@ -1,6 +1,6 @@
 # Norma
 
-A general-purpose **Agent Harness SDK in Go**, extracted from the core of a Claude-Code-style coding agent. It gives you the agent's engine — the streaming tool-use loop — as a reusable, dependency-free library you can point at any model (via the **Anthropic** *or* **OpenAI** wire format), drive with a **host-controlled system prompt**, and extend with your own tools, permission policy, hooks, and subagents.
+A general-purpose **Agent Harness SDK in Go**, extracted from the core of a production LLM coding agent. It gives you the agent's engine — the streaming tool-use loop — as a reusable, dependency-free library you can point at any model (via the **Anthropic** *or* **OpenAI** wire format), drive with a **host-controlled system prompt**, and extend with your own tools, permission policy, hooks, and subagents.
 
 The SDK is provider- and scenario-agnostic: the loop, scheduler, and safety boundary don't know whether they're driving a coding agent, a security auditor, or a customer-support bot.
 
@@ -27,7 +27,7 @@ Module path: `github.com/Autumn-27/norma` · Go 1.23+ (uses `iter`).
 ## Quick start
 
 ```go
-prov, _ := llm.NewProvider(llm.Config{Format: llm.FormatAnthropic, Model: "claude-opus-4-8"})
+prov, _ := llm.NewProvider(llm.Config{Format: llm.FormatAnthropic, Model: "your-model-name"})
 // or:  llm.Config{Format: llm.FormatOpenAI, BaseURL: "https://api.deepseek.com/v1", Model: "deepseek-chat"}
 
 sess := agentcore.NewSession(agentcore.Options{
@@ -48,7 +48,7 @@ for ev, err := range sess.Prompt(ctx, "Add a /health endpoint and run the tests.
 ```bash
 go build -o agentcore ./cmd/agentcore
 
-ANTHROPIC_API_KEY=... ./agentcore -provider anthropic -model claude-opus-4-8
+ANTHROPIC_API_KEY=... ./agentcore -provider anthropic -model your-model-name
 OPENAI_API_KEY=...    ./agentcore -provider openai    -model gpt-4o
 ./agentcore -provider openai -model gpt-4o -yes -p "summarize the go files here"
 ```
