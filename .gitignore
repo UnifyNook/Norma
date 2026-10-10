@@ -10,6 +10,7 @@
 .claude/
 .agents/
 .playwright-mcp/
+.codebuddy/
 
 # Local docs / analysis notes
 docs/
@@ -18,6 +19,29 @@ docs/
 bin/
 dist/
 *.out
+norma
+
+# Binaries (Go standard)
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test / coverage
+*.test
+*.prof
+coverage.txt
+coverage.out
+coverage.html
+
+# Go workspace
+go.work
+go.work.sum
+
+# Environment files
+.env
+.env.local
 
 # OS files
 .DS_Store
