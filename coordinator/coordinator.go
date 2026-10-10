@@ -11,11 +11,11 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/Autumn-27/norma/harness"
-	"github.com/Autumn-27/norma/llm"
-	"github.com/Autumn-27/norma/permission"
-	"github.com/Autumn-27/norma/subagent"
-	"github.com/Autumn-27/norma/tool"
+	"github.com/UnifyNook/Norma/harness"
+	"github.com/UnifyNook/Norma/llm"
+	"github.com/UnifyNook/Norma/permission"
+	"github.com/UnifyNook/Norma/subagent"
+	"github.com/UnifyNook/Norma/tool"
 )
 
 // DefaultWorkerPrompt is the default system prompt for worker subagents.

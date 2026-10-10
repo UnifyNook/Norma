@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/Autumn-27/norma/llm"
+	"github.com/UnifyNook/Norma/llm"
 )
 
 // noopCompactor implements Compactor but NOT ContextView: the loop must fall

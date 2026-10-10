@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Autumn-27/norma/llm"
-	"github.com/Autumn-27/norma/tool"
+	"github.com/UnifyNook/Norma/llm"
+	"github.com/UnifyNook/Norma/tool"
 )
 
 func asst(text string) llm.Message {

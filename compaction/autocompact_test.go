@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Autumn-27/norma/llm"
+	"github.com/UnifyNook/Norma/llm"
 )
 
 // recSummarizer records calls and the messages it was handed.

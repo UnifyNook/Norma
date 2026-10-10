@@ -5,10 +5,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Autumn-27/norma/agentcore"
-	"github.com/Autumn-27/norma/llm"
-	"github.com/Autumn-27/norma/noa"
-	"github.com/Autumn-27/norma/tool"
+	"github.com/UnifyNook/Norma/agentcore"
+	"github.com/UnifyNook/Norma/llm"
+	"github.com/UnifyNook/Norma/noa"
+	"github.com/UnifyNook/Norma/tool"
 )
 
 // pressureSession builds a session whose view is large enough to sit in the

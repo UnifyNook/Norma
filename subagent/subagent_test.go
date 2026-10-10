@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Autumn-27/norma/llm"
-	"github.com/Autumn-27/norma/permission"
-	"github.com/Autumn-27/norma/tool"
+	"github.com/UnifyNook/Norma/llm"
+	"github.com/UnifyNook/Norma/permission"
+	"github.com/UnifyNook/Norma/tool"
 )
 
 // fakeProvider always answers with a fixed line of text and ends the turn.

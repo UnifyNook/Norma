@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Autumn-27/norma/permission"
-	"github.com/Autumn-27/norma/tool"
+	"github.com/UnifyNook/Norma/permission"
+	"github.com/UnifyNook/Norma/tool"
 )
 
 func TestControllerTransitions(t *testing.T) {
