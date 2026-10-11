@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: ci
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+      - name: Build binaries
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME#v}"
+          for target in linux/amd64 linux/arm64 darwin/amd64 darwin/arm64 windows/amd64; do
+            goos="${target%%/*}"
+            goarch="${target##*/}"
+            dir="dist/agentcore_${version}_${goos}_${goarch}"
+            mkdir -p "$dir"
+            ext=''
+            if [ "$goos" = windows ]; then ext='.exe'; fi
+            CGO_ENABLED=0 GOOS="$goos" GOARCH="$goarch" \
+              go build -trimpath -ldflags '-s -w' \
+              -o "$dir/agentcore$ext" ./cmd/agentcore
+            cp README.md "$dir/"
+          done
+
+      - name: Archive
+        run: |
+          set -euo pipefail
+          cd dist
+          for dir in */; do
+            name="${dir%/}"
+            case "$name" in
+              *windows*) zip -qr "$name.zip" "$name" ;;
+              *) tar -czf "$name.tar.gz" "$name" ;;
+            esac
+          done
+
+      - name: Create release
+        run: gh release create "$GITHUB_REF_NAME" dist/*.tar.gz dist/*.zip --verify-tag --generate-notes
