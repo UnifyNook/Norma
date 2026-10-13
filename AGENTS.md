@@ -1,7 +1,3 @@
-# AGENTS.md
-
-本文件是仓库级统一入口。子目录中更近的 `AGENTS.md` 会补充或覆盖这里的规则；用户在对话中的明确要求优先级最高。整套体系的编写与维护约定见 `docs/AGENTS.md完全使用指南.md`（本地参考，`docs/` 不入库）。
-
 ## 项目概览
 
 Norma 是 Go 语言通用 **Agent Harness SDK**（module `github.com/UnifyNook/Norma`）：把 LLM 变成自主 agent 的引擎——流式工具调用循环、调度与安全边界，provider 与场景无关（Anthropic Messages / OpenAI Chat Completions / OpenAI Responses 三种 wire format 归一化为同一消息模型）。上层应用（如 Artex）以 SDK 依赖形式消费本仓库。改动任何代码前先锚定三条设计立场：
@@ -49,42 +45,3 @@ Norma 是 Go 语言通用 **Agent Harness SDK**（module `github.com/UnifyNook/N
 | [transcript/AGENTS.md](transcript/AGENTS.md) | 追加式 JSONL 会话转录持久化（`Session.Resume` 的底层） |
 | [cmd/agentcore/AGENTS.md](cmd/agentcore/AGENTS.md) | 可运行 REPL 演示：provider + 宿主 prompt + 核心工具集 + 交互式审批 |
 | [examples/AGENTS.md](examples/AGENTS.md) | 各场景完整示例（custom-llm / coding-agent / security-audit / planner-memory / coordinator） |
-
-## 特殊工具提示
-
-本仓库在 `.mcp.json`、`.cursor/mcp.json`、`.codex/config.toml` 与 `.opencode/opencode.json` 中配置了 Serena 与 CodeGraph 两个 MCP，与原生工具按任务形状分工，不要无条件只用某一个：
-
-- 跨文件架构、功能入口、调用链、依赖关系、改动影响面，且 CodeGraph 已初始化（`.codegraph/` 存在）时，优先用 CodeGraph 获取全局上下文。
-- 已知具体符号后的定义查看、引用查找、精确修改、重命名，用 Serena/LSP。
-- 精确文本搜索（错误信息、日志字符串、配置键）、整文件阅读、行级编辑、命令执行，用原生工具。
-- 索引结果（CodeGraph 图数据、调用计数）与实际源码不一致时，以当前源码和可执行验证结果为准；逐点精确的引用清单以 Serena（LSP references）为准。
-- Serena 返回的行号是 0-based，向用户报告时 +1。
-
-## 行为反模式警示：拒绝纠错残留
-
-严厉禁止以下“纠偏后残留历史痕迹与自我辩解”的行为模式：
-
-> 用户让做一盘“番茄炒蛋”，Agent 擅自加了“东坡肉”；被指出后虽然去掉了，但提交/PR 时写着「番茄炒蛋（无东坡肉）」，并在注释中大篇幅解释为什么本道菜不需要加东坡肉。
-
-**交付要求**：任何代码、注释、文档、提交信息及回复，都必须直接呈现对齐后的**干净终态设计**（Clean final-state design），严禁包含任何前序错误、自我辩解或“在此删掉某逻辑”的纠错痕迹。
-
-## AI协助开发声明
-
-凡使用了 AI 辅助生成或修改的代码，必须在 **commit 信息结尾**（以及对应 **PR 描述**中）按以下格式注明所使用的工具环境和模型：
-
-```
-assisted-by：{agent_name}：{model}
-```
-
-- `{agent_name}`：使用的 AI 编码工具/环境，如 `opencode`、`codex`、`cursor`
-- `{model}`：实际使用的模型（含供应商，格式可参考 `供应商/模型`），如 `Zhipu/GLM-5.3[Max]`
-
-示例：
-
-```bash
-git commit -m "feat(channel): support batch model pulling
-
-assisted-by：opencode：Zhipu/GLM-5.3[Max]"
-```
-
-多个模型/工具参与时逐行列出。纯人工改动无需此声明，但需在 PR 描述中说明。
